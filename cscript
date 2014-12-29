@@ -1,0 +1,24 @@
+import os
+
+def dependencies(target):
+    return (('libcxml', 'v0.11.0'), ('openjpeg-cdist', '5d8bffd'))
+
+def build(target, options):
+    cmd = './waf configure --prefix=%s' % target.directory
+    if target.platform == 'linux':
+        cmd += ' --static --disable-tests'
+    elif target.platform == 'windows':
+        cmd += ' --target-windows'
+    elif target.platform == 'osx':
+        cmd += ' --osx'
+
+    if target.debug:
+        cmd += ' --enable-debug'
+
+    target.command(cmd)
+    target.command('./waf build install')
+
+def make_doxygen(target):
+    os.makedirs('build/doc')
+    target.command('doxygen')
+    return os.path.abspath('build/doc/html')
