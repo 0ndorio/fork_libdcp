@@ -56,6 +56,14 @@ using std::make_pair;
 using boost::shared_ptr;
 using namespace libdcp;
 
+struct CompareAssetByUUID
+{
+	bool operator() (boost::shared_ptr<const Asset> a, boost::shared_ptr<const Asset> b)
+	{
+		return a->uuid() == b->uuid();
+	}
+};
+
 DCP::DCP (boost::filesystem::path directory)
 	: _directory (directory)
 {
@@ -108,10 +116,12 @@ DCP::write_pkl (string pkl_uuid, bool interop, XMLMetadata const & metadata, sha
 
 	xmlpp::Element* asset_list = pkl->add_child("AssetList");
 	list<shared_ptr<const Asset> > a = assets ();
+	a.unique(CompareAssetByUUID());
+
 	for (list<shared_ptr<const Asset> >::const_iterator i = a.begin(); i != a.end(); ++i) {
 		(*i)->write_to_pkl (asset_list, interop);
 	}
-	
+
 	for (list<shared_ptr<CPL> >::const_iterator i = _cpls.begin(); i != _cpls.end(); ++i) {
 		(*i)->write_to_pkl (asset_list, interop);
 	}
@@ -196,6 +206,8 @@ DCP::write_assetmap (string pkl_uuid, int pkl_length, bool interop, XMLMetadata 
 	}
 
 	list<shared_ptr<const Asset> > a = assets ();
+	a.unique(CompareAssetByUUID());
+
 	for (list<shared_ptr<const Asset> >::const_iterator i = a.begin(); i != a.end(); ++i) {
 		(*i)->write_to_assetmap (asset_list);
 	}
