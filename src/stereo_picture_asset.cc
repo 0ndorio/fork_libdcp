@@ -111,6 +111,13 @@ StereoPictureAsset::read ()
 
 	_size.width = desc.StoredWidth;
 	_size.height = desc.StoredHeight;
+
+	ASDCP::WriterInfo info;
+	if (ASDCP_FAILURE (reader.FillWriterInfo (info))) {
+		boost::throw_exception (DCPReadError ("could not read uuid"));
+	}
+
+	_uuid = uuid_from_byte_to_string(info.AssetUUID);
 }
 
 shared_ptr<const StereoPictureFrame>

@@ -75,6 +75,13 @@ SoundAsset::read ()
 	_edit_rate = desc.EditRate.Numerator;
 	assert (desc.EditRate.Denominator == 1);
 	_intrinsic_duration = desc.ContainerDuration;
+
+	ASDCP::WriterInfo info;
+	if (ASDCP_FAILURE (reader.FillWriterInfo (info))) {
+		boost::throw_exception (DCPReadError ("could not read uuid"));
+	}
+
+	_uuid = uuid_from_byte_to_string(info.AssetUUID);
 }
 
 boost::filesystem::path
