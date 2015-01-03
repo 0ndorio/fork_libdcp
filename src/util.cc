@@ -72,6 +72,21 @@ libdcp::make_uuid ()
 	return string (buffer);
 }
 
+/** Converts a UUID from byte array to a string.
+ *  @param filledWriterInfo Filled MXF WriterInfo which includes the MXF UUID as byte array.
+ *  @return UUID as string.
+ */
+string
+libdcp::uuid_from_byte_to_string (const byte_t *uuidArray)
+{
+	Kumu::UUID id;
+	id.Set(uuidArray);
+
+	char idBuffer[64];
+	id.EncodeHex(idBuffer, 64);
+
+	return std::string(idBuffer);
+}
 
 /** Create a digest for a file.
  *  @param filename File name.

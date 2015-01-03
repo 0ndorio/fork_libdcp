@@ -62,11 +62,12 @@ struct Size {
 	int width;
 	int height;
 };
-	
+
 extern bool operator== (Size const & a, Size const & b);
 extern bool operator!= (Size const & a, Size const & b);
 
 extern std::string make_uuid ();
+extern std::string uuid_from_byte_to_string (const unsigned char *uuidArray);
 extern std::string make_digest (std::string filename, boost::function<void (float)> *);
 extern std::string content_kind_to_string (ContentKind kind);
 extern ContentKind content_kind_from_string (std::string kind);
@@ -85,7 +86,7 @@ extern std::string tm_to_string (struct tm *);
 extern std::string utc_offset_to_string (boost::posix_time::time_duration);
 extern std::string ptime_to_string (boost::posix_time::ptime);
 extern FILE * fopen_boost (boost::filesystem::path, std::string);
-	
+
 }
 
 #endif
