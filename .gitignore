@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# waf created 
+.lock-waf_*
+.waf-*/
+build/
+src/version.cc
