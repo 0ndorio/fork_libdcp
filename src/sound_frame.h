@@ -40,6 +40,7 @@ public:
 
 	uint8_t const * data () const;
 	int size () const;
+	const ASDCP::PCM::FrameBuffer & buffer() const;
 
 private:
 	ASDCP::PCM::FrameBuffer* _buffer;

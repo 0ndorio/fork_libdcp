@@ -57,3 +57,9 @@ SoundFrame::size () const
 {
 	return _buffer->Size ();
 }
+
+const ASDCP::PCM::FrameBuffer&
+SoundFrame::buffer() const
+{
+	return *_buffer;
+}
