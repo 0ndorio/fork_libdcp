@@ -378,6 +378,20 @@ SoundAssetWriter::write (float const * const * data, int frames)
 	}
 }
 
+void SoundAssetWriter::write(const SoundFrame &frame)
+{
+    ASDCP::Result_t const r = _state->mxf_writer.WriteFrame (frame.buffer(),
+                                                             _state->encryption_context,
+                                                             0);
+    if (ASDCP_FAILURE (r)) {
+        boost::throw_exception (
+            MiscError ("could not write audio MXF frame (" + lexical_cast<string> (int (r)) + ")")
+        );
+    }
+
+    ++_frames_written;
+}
+
 void
 SoundAssetWriter::write_current_frame ()
 {

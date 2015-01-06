@@ -37,6 +37,7 @@ class SoundAsset;
 class SoundAssetWriter
 {
 public:
+	void write(const SoundFrame &frame);
 	void write (float const * const *, int);
 	void finalize ();
 
