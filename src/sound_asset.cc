@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <boost/algorithm/hex.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <libxml++/nodes/element.h>
@@ -82,6 +83,11 @@ SoundAsset::read ()
 	}
 
 	_uuid = uuid_from_byte_to_string(info.AssetUUID);
+    if (info.EncryptedEssence) {
+        boost::algorithm::hex(std::begin(info.CryptographicKeyID),
+                              std::end(info.CryptographicKeyID),
+                              back_inserter(_key_id));
+    }
 }
 
 boost::filesystem::path

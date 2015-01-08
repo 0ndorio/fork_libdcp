@@ -17,6 +17,7 @@
 
 */
 
+#include <boost/algorithm/hex.hpp>
 #include "AS_DCP.h"
 #include "stereo_picture_asset.h"
 #include "stereo_picture_frame.h"
@@ -118,6 +119,11 @@ StereoPictureAsset::read ()
 	}
 
 	_uuid = uuid_from_byte_to_string(info.AssetUUID);
+    if (info.EncryptedEssence) {
+        boost::algorithm::hex(std::begin(info.CryptographicKeyID),
+                              std::end(info.CryptographicKeyID),
+                              back_inserter(_key_id));
+    }
 }
 
 shared_ptr<const StereoPictureFrame>

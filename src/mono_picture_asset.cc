@@ -17,6 +17,7 @@
 
 */
 
+#include <boost/algorithm/hex.hpp>
 #include "mono_picture_asset.h"
 #include "mono_picture_asset_writer.h"
 #include "AS_DCP.h"
@@ -117,6 +118,11 @@ MonoPictureAsset::read ()
 	}
 
 	_uuid = uuid_from_byte_to_string(info.AssetUUID);
+    if (info.EncryptedEssence) {
+        boost::algorithm::hex(std::begin(info.CryptographicKeyID),
+                              std::end(info.CryptographicKeyID),
+                              back_inserter(_key_id));
+    }
 }
 
 boost::filesystem::path
