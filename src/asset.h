@@ -149,8 +149,6 @@ protected:
 	int _intrinsic_duration;
 	/** Length to present in frames */
 	int _duration;
-
-private:	
 	/** Digest of our MXF or XML file */
 	mutable std::string _digest;
 };
