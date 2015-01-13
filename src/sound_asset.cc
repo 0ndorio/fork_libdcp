@@ -83,7 +83,9 @@ SoundAsset::read ()
 	}
 
 	_uuid = uuid_from_byte_to_string(info.AssetUUID);
-	_key_id.clear();
+    _digest.clear();
+    _key_id.clear();
+
     if (info.EncryptedEssence) {
         _key_id = uuid_from_byte_to_string(info.CryptographicKeyID);
     }

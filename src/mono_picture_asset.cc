@@ -116,10 +116,12 @@ MonoPictureAsset::read ()
 		boost::throw_exception (DCPReadError ("could not read uuid"));
 	}
 
-	_uuid = uuid_from_byte_to_string(info.AssetUUID);
+	_uuid = uuid_from_byte_to_string(info.AssetUUID);    
+    _digest.clear();
+    _key_id.clear();
+    
     if (info.EncryptedEssence) {
         _key_id = uuid_from_byte_to_string(info.CryptographicKeyID);
-        std::cout << "My New ID: " << _key_id << std::endl;
     }
 }
 
