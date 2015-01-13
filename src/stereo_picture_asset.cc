@@ -121,9 +121,7 @@ StereoPictureAsset::read ()
 	_uuid = uuid_from_byte_to_string(info.AssetUUID);
 	_key_id.clear();
     if (info.EncryptedEssence) {
-        boost::algorithm::hex(std::begin(info.CryptographicKeyID),
-                              std::end(info.CryptographicKeyID),
-                              back_inserter(_key_id));
+        _key_id = uuid_from_byte_to_string(info.CryptographicKeyID);
     }
 }
 
